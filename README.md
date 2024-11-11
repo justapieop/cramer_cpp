@@ -1,3 +1,3 @@
 # cramer_cpp
 
-Simple Cramer's method implementation in c++
+Simple (and naive) matrix and Cramer's method implementation in c++.

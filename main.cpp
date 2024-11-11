@@ -35,6 +35,19 @@ public: unsigned int l{}, w{};
         return m;
     }
 
+    bool operator==(const Matrix& k) const {
+        if (this->l != k.l || this->w != k.w) return false;
+        for (int i = 0; i < this->l; i++) {
+            for (int j = 0; j < this->w; j++)
+                if (this->v[i][j] != k.v[i][j]) return false;
+        }
+        return true;
+    }
+
+    bool operator!=(const Matrix& k) const {
+        return !this->operator==(k);
+    }
+
     Matrix operator*(const Matrix& k) const {
         if (this->w != k.l) {
             throw invalid_argument("Invalid dimension.");
