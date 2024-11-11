@@ -21,7 +21,7 @@ public: unsigned int l{}, w{};
         this->v = t;
     }
 
-    Matrix add(const Matrix& k) const {
+    Matrix operator+(const Matrix& k) const {
         if (k.l != this->l || k.w != this->w) {
             throw invalid_argument("Invalid dimension.");
         }
@@ -35,7 +35,7 @@ public: unsigned int l{}, w{};
         return m;
     }
 
-    Matrix mul(const Matrix& k) const {
+    Matrix operator*(const Matrix& k) const {
         if (this->w != k.l) {
             throw invalid_argument("Invalid dimension.");
         }
@@ -72,11 +72,21 @@ public: unsigned int l{}, w{};
         return m;
     }
 
-    Matrix mul(const double k) const {
+    Matrix operator*(const double k) const {
         Matrix m(this->v);
         for (int i = 0; i < m.l; i++) {
             for (int j = 0; j < m.w; j++) {
                 m.v[i][j] *= k;
+            }
+        }
+        return m;
+    }
+
+    Matrix operator/(const double k) const {
+        Matrix m(this->v);
+        for (int i = 0; i < m.l; i++) {
+            for (int j = 0; j < m.w; j++) {
+                m.v[i][j] /= k;
             }
         }
         return m;
@@ -159,7 +169,7 @@ public: unsigned int l{}, w{};
         }
         if (this->det() == 0)
             throw invalid_argument("Inverse matrix non-existent");
-        return this->adj().mul(1 / this->det());
+        return this->adj() / this->det();
     }
 };
 
@@ -193,7 +203,7 @@ int main() {
         return 0;
     }
 
-    s = a.inverse().mul(b);
+    s = a.inverse() * (b);
 
     cout << "The system of linear equations has the only solution: \n";
 
